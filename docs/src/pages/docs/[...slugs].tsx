@@ -10,7 +10,7 @@ import {
 } from 'fumadocs-ui/layouts/docs/page';
 import { unstable_notFound } from 'waku/router/server';
 import { getMDXComponents } from '@/components/mdx';
-import { getPageImageUrl, getPageMarkdownUrl } from '@/lib/shared';
+import { getPageMarkdownUrl } from '@/lib/shared';
 
 export default function Page({ slugs }: PageProps<'/docs/[...slugs]'>) {
   const page = source.getPage(slugs);
@@ -20,7 +20,6 @@ export default function Page({ slugs }: PageProps<'/docs/[...slugs]'>) {
   const markdownUrl = getPageMarkdownUrl(page).url;
   return (
     <DocsPage toc={page.data.toc}>
-      <meta property="og:image" content={getPageImageUrl(page).url} />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pt-2 pb-6">
