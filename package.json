@@ -1,0 +1,43 @@
+{
+  "name": "duronto",
+  "version": "0.1.0",
+  "description": "Development-time-only tool for designing database schemas in TypeScript and converting them to SQL.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "duronto": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "release:check": "npm run typecheck && npm run build && npm test"
+  },
+  "keywords": [
+    "schema",
+    "sql",
+    "typescript",
+    "dev"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jiti": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
