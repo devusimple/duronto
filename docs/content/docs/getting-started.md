@@ -1,4 +1,4 @@
-﻿---
+---
 title: Getting started
 description: Install duronto, configure a schema path and dialect, and generate SQL or type artifacts.
 ---

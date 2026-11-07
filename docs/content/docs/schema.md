@@ -1,4 +1,4 @@
-﻿---
+---
 title: Schema definition
 description: Reference for table constructors, column types, modifiers, foreign keys, junction tables, and table-level constraints.
 ---
