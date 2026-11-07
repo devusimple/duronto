@@ -1,6 +1,6 @@
 {
   "name": "duronto",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Development-time-only tool for designing database schemas in TypeScript and converting them to SQL.",
   "type": "module",
   "main": "./dist/index.js",
