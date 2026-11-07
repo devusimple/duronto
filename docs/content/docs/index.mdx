@@ -1,0 +1,65 @@
+﻿---
+title: duronto
+description: A development-time TypeScript schema definition tool that compiles to dialect-specific SQL and generated type definitions.
+---
+
+**duronto** is a development-time library and CLI for defining relational database schemas in TypeScript and producing SQL DDL and TypeScript types from that definition.
+
+It runs only during development and code generation. duronto is intended to be installed as a `devDependency`; application code should not import it at runtime.
+
+## Scope
+
+duronto provides:
+
+- A typed schema API for tables, columns, modifiers, foreign keys, and table constraints.
+- Compilation from schema objects to a dialect-neutral intermediate representation (IR).
+- SQL generation for supported dialects (currently SQLite and PostgreSQL).
+- Snapshot-based diffing and migration file generation.
+- Type helpers (`InferSelect`, `InferInsert`, `InferUpdate`) and generated type outputs.
+
+duronto does **not** provide a runtime ORM, query builder, database driver, connection management, or migration runner. Generated SQL files are applied with your own database tooling.
+
+## Design constraints
+
+- **Development-time only.** Schema builders execute in the CLI process; runtime bundles consume generated artifacts or type-only imports.
+- **Typed schema definition.** Column modifiers affect inferred TypeScript types.
+- **Deterministic output.** The IR uses SQL names and stable ordering so generated artifacts and snapshots diff predictably.
+- **Dialect isolation.** Core schema/IR/diff logic is dialect-neutral; dialect packages map logical types and render SQL.
+
+## Example
+
+```ts
+import { table, id, text, int, bool, timestamp, ref } from "duronto";
+
+export const user = table("user", {
+  id: id(),
+  email: text().unique().notNull(),
+  name: text().notNull(),
+  age: int(),
+  createdAt: timestamp().defaultNow().notNull(),
+});
+
+export const post = table("post", {
+  id: id(),
+  title: text().notNull(),
+  published: bool().default(false).notNull(),
+  authorId: ref(() => user.id, { onDelete: "cascade" }).notNull(),
+});
+```
+
+```bash
+npx duronto init
+npx duronto sql
+npx duronto generate --name init
+```
+
+## Documentation map
+
+| Topic | Description |
+|---|---|
+| [Getting started](./getting-started) | Installation, configuration, and first outputs |
+| [Schema definition](./schema) | Tables, column types, modifiers, relations, constraints |
+| [Type generation](./types) | `Infer*` helpers, `types`, and `sdk` outputs |
+| [CLI reference](./cli) | Commands, options, and configuration |
+| [Migrations](./migrations) | Snapshots, diffs, renames, destructive-change handling |
+| [IR and dialects](./ir) | Intermediate representation and dialect interface |
